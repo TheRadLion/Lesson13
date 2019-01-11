@@ -6,17 +6,30 @@ let gameState = {};
 
 InitializeBoardState();
 
+function SaveBoardState() {
+    localStorage.setItem("TicTacToe", JSON.stringify(gameState));
+}
+
+function LoadBoardState() {
+    let r = JSON.parse(localStorage.getItem("TicTacToe"));
+    if (r !== null) {
+        gameState = r;
+    } else {
+        gameState = {
+            board: [
+                ['', '', ''],
+                ['', '', ''],
+                ['', '', '']
+            ],
+            Next: "X",
+            Winner: ""
+        };
+    }
+}
 
 function InitializeBoardState() {
-    gameState = {
-        board: [
-            ['', '', ''],
-            ['', '', ''],
-            ['', '', '']
-        ],
-        Next: "X",
-        Winner: ""
-    };
+    LoadBoardState();
+    
 
     // add events for when the users click on squares.
     document.querySelectorAll('.sq').forEach((element) => {
@@ -82,12 +95,12 @@ function CheckForWinner() {
     let row1 = gameState.board[0][0] + gameState.board[0][1] + gameState.board[0][2];
     let row2 = gameState.board[1][0] + gameState.board[1][1] + gameState.board[1][2];
     let row3 = gameState.board[2][0] + gameState.board[2][1] + gameState.board[2][2];
-    
+
     // first check to see of the board is full
     if (row1.length + row2.length + row3.length === 9) {
         gameState.Winner = "Tie";
     }
-    
+
     // check rows for win
     if (row1 === "XXX" || row2 === "XXX" || row3 === "XXX") {
         gameState.Winner = "X";
@@ -99,7 +112,7 @@ function CheckForWinner() {
     // check cols for win
     let col1 = gameState.board[0][0] + gameState.board[1][0] + gameState.board[2][0];
     let col2 = gameState.board[0][1] + gameState.board[1][1] + gameState.board[2][1];
-    let col3 = gameState.board[0][2] + gameState.board[1][2] + gameState.board[2][2];    
+    let col3 = gameState.board[0][2] + gameState.board[1][2] + gameState.board[2][2];
     if (col1 === "XXX" || col2 === "XXX" || col3 === "XXX") {
         gameState.Winner = "X";
     }
