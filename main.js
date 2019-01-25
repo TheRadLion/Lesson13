@@ -27,6 +27,20 @@ function LoadBoardState() {
     }
 }
 
+function ResetBoardState(){
+    gameState = {
+        board: [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ],
+        Next: "X",
+        Winner: ""
+    };
+    SaveBoardState();
+    InitializeBoardState();
+}
+
 function InitializeBoardState() {
     LoadBoardState();
     
@@ -86,7 +100,7 @@ function MainGameLogic(event) {
             }
         }
     };
-
+    SaveBoardState();
     UpdateScreenState();
 }
 
